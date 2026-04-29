@@ -1,6 +1,6 @@
 # AIM Benchmarks
 
-Source report: [`eval_report_after_teacher_bfs.md`](eval_report_after_teacher_bfs.md)
+Source report: [`docs/benchmarks/eval_report_after_teacher_bfs.md`](docs/benchmarks/eval_report_after_teacher_bfs.md)
 
 Benchmark command:
 
@@ -118,4 +118,3 @@ Next benchmark targets:
 - 2WikiMultiHopQA
 - MuSiQue
 - larger internal fixture with `gold_sources` filled for every item
-

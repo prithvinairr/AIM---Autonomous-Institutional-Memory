@@ -90,5 +90,6 @@ phase2_context_*.txt
 phase2_output.txt
 eval_report*.md
 eval_report*.json
-!eval_report_after_teacher_bfs.md
-!eval_report_after_teacher_bfs.md.json
+!docs/benchmarks/
+!docs/benchmarks/eval_report_after_teacher_bfs.md
+!docs/benchmarks/eval_report_after_teacher_bfs.md.json

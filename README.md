@@ -51,7 +51,7 @@ No re-indexing job, no nightly batch. The webhook fires, the extractor pulls ent
 
 ## Benchmark — current numbers
 
-Latest saved run: [`eval_report_after_teacher_bfs.md`](eval_report_after_teacher_bfs.md). Fixture: 34 gold-labeled items in `tests/eval/fixtures/ground_truth.yaml`.
+Latest saved run: [`docs/benchmarks/eval_report_after_teacher_bfs.md`](docs/benchmarks/eval_report_after_teacher_bfs.md). Fixture: 34 gold-labeled items in `tests/eval/fixtures/ground_truth.yaml`.
 
 | System | Overall NDCG@10 | Multi-hop NDCG@10 | Multi-hop Path Acc | Multi-hop Citation | p50 Latency |
 |---|---:|---:|---:|---:|---:|
