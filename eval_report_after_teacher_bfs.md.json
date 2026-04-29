@@ -1,0 +1,1172 @@
+{
+  "fixture": {
+    "path": "tests/eval/fixtures/ground_truth.yaml",
+    "counts": {
+      "negative": 6,
+      "ambiguous": 4,
+      "multi_hop": 14,
+      "single_hop": 10
+    },
+    "hop_depths": {
+      "0": 6,
+      "1": 11,
+      "2": 14,
+      "3": 2,
+      "4": 1
+    }
+  },
+  "systems": {
+    "vector_only": {
+      "per_item": [
+        {
+          "id": "single-001",
+          "ndcg": 1.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 10.627305000001797,
+          "error": null
+        },
+        {
+          "id": "single-002",
+          "ndcg": 0.38685280723454163,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.04129340001964,
+          "error": null
+        },
+        {
+          "id": "single-003",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 4.108214999985648,
+          "error": null
+        },
+        {
+          "id": "single-004",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 4.0112033000041265,
+          "error": null
+        },
+        {
+          "id": "single-005",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 5.717165499983821,
+          "error": null
+        },
+        {
+          "id": "single-006",
+          "ndcg": 0.6309297535714575,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.077036600006977,
+          "error": null
+        },
+        {
+          "id": "single-007",
+          "ndcg": 0.6309297535714575,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 9.283576100016944,
+          "error": null
+        },
+        {
+          "id": "single-008",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.9829689000034705,
+          "error": null
+        },
+        {
+          "id": "single-009",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 5.7430094000010286,
+          "error": null
+        },
+        {
+          "id": "multi-001",
+          "ndcg": 0.9674679834891693,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 7.747818300005747,
+          "error": null
+        },
+        {
+          "id": "multi-002",
+          "ndcg": 0.46927872602275644,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 8.266924600000493,
+          "error": null
+        },
+        {
+          "id": "multi-003",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 10.655874600022798,
+          "error": null
+        },
+        {
+          "id": "multi-004",
+          "ndcg": 0.6508205185601091,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 7.205507299979217,
+          "error": null
+        },
+        {
+          "id": "healthcare-001",
+          "ndcg": 0.6934264036172708,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 4.781377700011944,
+          "error": null
+        },
+        {
+          "id": "healthcare-002",
+          "ndcg": 0.5881601264058984,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.43621479999274,
+          "error": null
+        },
+        {
+          "id": "healthcare-003",
+          "ndcg": 0.9438661545147247,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 5.3969598000112455,
+          "error": null
+        },
+        {
+          "id": "multi-005",
+          "ndcg": 1.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 7.266269799991278,
+          "error": null
+        },
+        {
+          "id": "multi-006",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 8.28217439999571,
+          "error": null
+        },
+        {
+          "id": "multi-007",
+          "ndcg": 0.4525081529734507,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.2690751000191085,
+          "error": null
+        },
+        {
+          "id": "multi-008",
+          "ndcg": 0.18154179253735267,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.717551799985813,
+          "error": null
+        },
+        {
+          "id": "multi-009",
+          "ndcg": 0.18154179253735267,
+          "cite": 0.5,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 8.82688340000459,
+          "error": null
+        },
+        {
+          "id": "multi-010",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 7.189334099995904,
+          "error": null
+        },
+        {
+          "id": "multi-011",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 5.496370000008028,
+          "error": null
+        },
+        {
+          "id": "multi-012",
+          "ndcg": 1.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 5.992452100006631,
+          "error": null
+        },
+        {
+          "id": "negative-001",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 4.221655500004999,
+          "error": null
+        },
+        {
+          "id": "negative-002",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 5.027793399989605,
+          "error": null
+        },
+        {
+          "id": "negative-003",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 4.679425699985586,
+          "error": null
+        },
+        {
+          "id": "negative-004",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 6.406636300001992,
+          "error": null
+        },
+        {
+          "id": "negative-005",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 4.9311228999868035,
+          "error": null
+        },
+        {
+          "id": "negative-006",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 4.822359799989499,
+          "error": null
+        },
+        {
+          "id": "ambiguous-001",
+          "ndcg": 0.7653606369886217,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 7.059261700022034,
+          "error": null
+        },
+        {
+          "id": "ambiguous-002",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.1974346000060905,
+          "error": null
+        },
+        {
+          "id": "ambiguous-003",
+          "ndcg": 0.46927872602275644,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.177198199991835,
+          "error": null
+        },
+        {
+          "id": "ambiguous-004",
+          "ndcg": 0.6797310500037655,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 5.352163700008532,
+          "error": null
+        }
+      ],
+      "by_category": {
+        "single_hop": {
+          "ndcg": 0.33421387179947276,
+          "cite": 0.4,
+          "path": 0.0,
+          "reject": 0.0,
+          "latency_s": 6.33731509000354
+        },
+        "multi_hop": {
+          "ndcg": 0.45965608907434385,
+          "cite": 0.39285714285714285,
+          "path": 0.0,
+          "reject": 0.0,
+          "latency_s": 7.267815007144236
+        },
+        "negative": {
+          "ndcg": 0.0,
+          "cite": 0.6666666666666666,
+          "path": 0.0,
+          "reject": 0.8333333333333334,
+          "latency_s": 5.014832266659748
+        },
+        "ambiguous": {
+          "ndcg": 0.47859260325378594,
+          "cite": 0.75,
+          "path": 0.0,
+          "reject": 0.0,
+          "latency_s": 6.196514550007123
+        }
+      },
+      "overall": {
+        "ndcg": 0.34387336406031427,
+        "cite": 0.4852941176470588,
+        "path": 0.0,
+        "reject": 0.8333333333333334,
+        "likert": 0.0,
+        "latency_s": 6.187316399998963
+      }
+    },
+    "graph_only": {
+      "per_item": [
+        {
+          "id": "single-001",
+          "ndcg": 1.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 13.235023500019452,
+          "error": null
+        },
+        {
+          "id": "single-002",
+          "ndcg": 1.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 4.425634400016861,
+          "error": null
+        },
+        {
+          "id": "single-003",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 3.020732900011353,
+          "error": null
+        },
+        {
+          "id": "single-004",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 2.939997499983292,
+          "error": null
+        },
+        {
+          "id": "single-005",
+          "ndcg": 1.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 3.8323383999813814,
+          "error": null
+        },
+        {
+          "id": "single-006",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 2.932518899993738,
+          "error": null
+        },
+        {
+          "id": "single-007",
+          "ndcg": 1.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.593667699984508,
+          "error": null
+        },
+        {
+          "id": "single-008",
+          "ndcg": 1.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 4.717043899989221,
+          "error": null
+        },
+        {
+          "id": "single-009",
+          "ndcg": 0.9197207891481876,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 3.626316099980613,
+          "error": null
+        },
+        {
+          "id": "multi-001",
+          "ndcg": 0.9325210919548239,
+          "cite": 1.0,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 11.074139600008493,
+          "error": null
+        },
+        {
+          "id": "multi-002",
+          "ndcg": 0.6340499455108034,
+          "cite": 1.0,
+          "path": 0.3333333333333333,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 10.588347200013231,
+          "error": null
+        },
+        {
+          "id": "multi-003",
+          "ndcg": 0.9674679834891693,
+          "cite": 1.0,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.991661100008059,
+          "error": null
+        },
+        {
+          "id": "multi-004",
+          "ndcg": 0.7920874914199381,
+          "cite": 0.0,
+          "path": 0.6666666666666666,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 10.731553200021153,
+          "error": null
+        },
+        {
+          "id": "healthcare-001",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 3.2041750000207685,
+          "error": null
+        },
+        {
+          "id": "healthcare-002",
+          "ndcg": 0.9674679834891693,
+          "cite": 1.0,
+          "path": 0.6666666666666666,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 9.562976499990327,
+          "error": null
+        },
+        {
+          "id": "healthcare-003",
+          "ndcg": 0.7365896932159578,
+          "cite": 0.0,
+          "path": 0.75,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 5.834466900007101,
+          "error": null
+        },
+        {
+          "id": "multi-005",
+          "ndcg": 0.86034433104172,
+          "cite": 0.0,
+          "path": 0.6666666666666666,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 15.060041499993531,
+          "error": null
+        },
+        {
+          "id": "multi-006",
+          "ndcg": 0.9469024295259745,
+          "cite": 1.0,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 11.444787400017958,
+          "error": null
+        },
+        {
+          "id": "multi-007",
+          "ndcg": 0.9469024295259745,
+          "cite": 0.0,
+          "path": 0.6666666666666666,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 3.818112499982817,
+          "error": null
+        },
+        {
+          "id": "multi-008",
+          "ndcg": 0.20210734650054757,
+          "cite": 0.0,
+          "path": 0.3333333333333333,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 7.900812700012466,
+          "error": null
+        },
+        {
+          "id": "multi-009",
+          "ndcg": 0.7039180890341347,
+          "cite": 0.0,
+          "path": 0.6666666666666666,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 10.392159799986985,
+          "error": null
+        },
+        {
+          "id": "multi-010",
+          "ndcg": 0.8179809735263114,
+          "cite": 1.0,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 5.318248099996708,
+          "error": null
+        },
+        {
+          "id": "multi-011",
+          "ndcg": 0.6713860725233041,
+          "cite": 0.0,
+          "path": 0.6666666666666666,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 7.541844999999739,
+          "error": null
+        },
+        {
+          "id": "multi-012",
+          "ndcg": 1.0,
+          "cite": 1.0,
+          "path": 0.6666666666666666,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 9.173580600006972,
+          "error": null
+        },
+        {
+          "id": "negative-001",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 2.892292100004852,
+          "error": null
+        },
+        {
+          "id": "negative-002",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 6.172382599994307,
+          "error": null
+        },
+        {
+          "id": "negative-003",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.750197100016521,
+          "error": null
+        },
+        {
+          "id": "negative-004",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 7.350612000009278,
+          "error": null
+        },
+        {
+          "id": "negative-005",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 2.949444300000323,
+          "error": null
+        },
+        {
+          "id": "negative-006",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 2.93004999999539,
+          "error": null
+        },
+        {
+          "id": "ambiguous-001",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 3.002442900004098,
+          "error": null
+        },
+        {
+          "id": "ambiguous-002",
+          "ndcg": 0.14126697285982898,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 4.421165400010068,
+          "error": null
+        },
+        {
+          "id": "ambiguous-003",
+          "ndcg": 0.4525081529734507,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 7.321378099994035,
+          "error": null
+        },
+        {
+          "id": "ambiguous-004",
+          "ndcg": 0.9469024295259745,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 6.471236200013664,
+          "error": null
+        }
+      ],
+      "by_category": {
+        "single_hop": {
+          "ndcg": 0.5919720789148187,
+          "cite": 0.2,
+          "path": 0.0,
+          "reject": 0.0,
+          "latency_s": 4.852744829998119
+        },
+        "multi_hop": {
+          "ndcg": 0.7985518471969878,
+          "cite": 0.5,
+          "path": 0.7202380952380951,
+          "reject": 0.0,
+          "latency_s": 8.959480864288967
+        },
+        "negative": {
+          "ndcg": 0.0,
+          "cite": 0.8333333333333334,
+          "path": 0.0,
+          "reject": 0.8333333333333334,
+          "latency_s": 4.8408296833367785
+        },
+        "ambiguous": {
+          "ndcg": 0.38516938883981355,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "latency_s": 5.304055650005466
+        }
+      },
+      "overall": {
+        "ndcg": 0.5482389472136844,
+        "cite": 0.4117647058823529,
+        "path": 0.29656862745098034,
+        "reject": 0.8333333333333334,
+        "likert": 0.0,
+        "latency_s": 6.3218094000039855
+      }
+    },
+    "aim_full": {
+      "per_item": [
+        {
+          "id": "single-001",
+          "ndcg": 1.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 30.939208199997665,
+          "error": null
+        },
+        {
+          "id": "single-002",
+          "ndcg": 0.8772153153380493,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 13.791273099981481,
+          "error": null
+        },
+        {
+          "id": "single-003",
+          "ndcg": 1.0,
+          "cite": 0.3333333333333333,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 20.67245320000802,
+          "error": null
+        },
+        {
+          "id": "single-004",
+          "ndcg": 1.0,
+          "cite": 0.3333333333333333,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 20.30667920000269,
+          "error": null
+        },
+        {
+          "id": "single-005",
+          "ndcg": 1.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 32.34556879999582,
+          "error": null
+        },
+        {
+          "id": "single-006",
+          "ndcg": 0.6309297535714575,
+          "cite": 0.3333333333333333,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 34.24179030000232,
+          "error": null
+        },
+        {
+          "id": "single-007",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 21.63821740000276,
+          "error": null
+        },
+        {
+          "id": "single-008",
+          "ndcg": 1.0,
+          "cite": 0.3333333333333333,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 23.056172599986894,
+          "error": null
+        },
+        {
+          "id": "single-009",
+          "ndcg": 1.0,
+          "cite": 0.3333333333333333,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 18.17855869999039,
+          "error": null
+        },
+        {
+          "id": "multi-001",
+          "ndcg": 0.9469024295259745,
+          "cite": 0.3333333333333333,
+          "path": 0.6666666666666666,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 30.88258040000801,
+          "error": null
+        },
+        {
+          "id": "multi-002",
+          "ndcg": 0.7328286204777911,
+          "cite": 0.3333333333333333,
+          "path": 0.6666666666666666,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 30.257834999996703,
+          "error": null
+        },
+        {
+          "id": "multi-003",
+          "ndcg": 0.9217868789962071,
+          "cite": 0.3333333333333333,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 28.325904700002866,
+          "error": null
+        },
+        {
+          "id": "multi-004",
+          "ndcg": 0.9674679834891693,
+          "cite": 0.3333333333333333,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 31.976863299991237,
+          "error": null
+        },
+        {
+          "id": "healthcare-001",
+          "ndcg": 1.0,
+          "cite": 0.3333333333333333,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 25.304256799980067,
+          "error": null
+        },
+        {
+          "id": "healthcare-002",
+          "ndcg": 0.9010126104210695,
+          "cite": 0.25,
+          "path": 0.6666666666666666,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 24.918591900001047,
+          "error": null
+        },
+        {
+          "id": "healthcare-003",
+          "ndcg": 1.0,
+          "cite": 1.0,
+          "path": 0.75,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 17.153971299994737,
+          "error": null
+        },
+        {
+          "id": "multi-005",
+          "ndcg": 0.9469024295259745,
+          "cite": 0.3333333333333333,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 36.8972651999793,
+          "error": null
+        },
+        {
+          "id": "multi-006",
+          "ndcg": 0.8710785440003369,
+          "cite": 0.0,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 31.73396209999919,
+          "error": null
+        },
+        {
+          "id": "multi-007",
+          "ndcg": 0.9060254355346823,
+          "cite": 0.3333333333333333,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 28.045146600023145,
+          "error": null
+        },
+        {
+          "id": "multi-008",
+          "ndcg": 0.23463936301137822,
+          "cite": 0.3333333333333333,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 32.770908700011205,
+          "error": null
+        },
+        {
+          "id": "multi-009",
+          "ndcg": 0.7039180890341347,
+          "cite": 0.5,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 31.562214399978984,
+          "error": null
+        },
+        {
+          "id": "multi-010",
+          "ndcg": 0.8710785440003369,
+          "cite": 0.0,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 28.80081249997602,
+          "error": null
+        },
+        {
+          "id": "multi-011",
+          "ndcg": 0.7039180890341347,
+          "cite": 0.5,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 31.91013900001417,
+          "error": null
+        },
+        {
+          "id": "multi-012",
+          "ndcg": 1.0,
+          "cite": 0.5,
+          "path": 1.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 37.289977400010685,
+          "error": null
+        },
+        {
+          "id": "negative-001",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 21.041001199977472,
+          "error": null
+        },
+        {
+          "id": "negative-002",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 9.973366499994881,
+          "error": null
+        },
+        {
+          "id": "negative-003",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 29.626052700012224,
+          "error": null
+        },
+        {
+          "id": "negative-004",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 32.84111359997769,
+          "error": null
+        },
+        {
+          "id": "negative-005",
+          "ndcg": 0.0,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 24.599462999991374,
+          "error": null
+        },
+        {
+          "id": "negative-006",
+          "ndcg": 0.0,
+          "cite": 1.0,
+          "path": 0.0,
+          "reject": 1.0,
+          "likert": null,
+          "latency_s": 22.407561899977736,
+          "error": null
+        },
+        {
+          "id": "ambiguous-001",
+          "ndcg": 0.16716045496620227,
+          "cite": 0.0,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 28.17988239999977,
+          "error": null
+        },
+        {
+          "id": "ambiguous-002",
+          "ndcg": 0.8395700624665824,
+          "cite": 0.3333333333333333,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 32.2329030999972,
+          "error": null
+        },
+        {
+          "id": "ambiguous-003",
+          "ndcg": 0.34337431936037655,
+          "cite": 0.3333333333333333,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 29.408291100000497,
+          "error": null
+        },
+        {
+          "id": "ambiguous-004",
+          "ndcg": 0.8385465274895063,
+          "cite": 0.3333333333333333,
+          "path": 0.0,
+          "reject": 0.0,
+          "likert": null,
+          "latency_s": 31.057980999990832,
+          "error": null
+        }
+      ],
+      "by_category": {
+        "single_hop": {
+          "ndcg": 0.8508145068909506,
+          "cite": 0.2,
+          "path": 0.1,
+          "reject": 0.0,
+          "latency_s": 24.04741782999481
+        },
+        "multi_hop": {
+          "ndcg": 0.8362542155036563,
+          "cite": 0.3630952380952381,
+          "path": 0.8392857142857143,
+          "reject": 0.0,
+          "latency_s": 30.180440892856236
+        },
+        "negative": {
+          "ndcg": 0.0,
+          "cite": 0.8333333333333334,
+          "path": 0.0,
+          "reject": 0.8333333333333334,
+          "latency_s": 23.41475981665523
+        },
+        "ambiguous": {
+          "ndcg": 0.5471628410706669,
+          "cite": 0.25,
+          "path": 0.0,
+          "reject": 0.0,
+          "latency_s": 30.219764399997075
+        }
+      },
+      "overall": {
+        "ndcg": 0.6589516308895107,
+        "cite": 0.3848039215686274,
+        "path": 0.375,
+        "reject": 0.8333333333333334,
+        "likert": 0.0,
+        "latency_s": 29.104551799988258
+      }
+    }
+  },
+  "exit_criterion": {
+    "multi_hop_delta_pp": 37.65981264293124,
+    "single_hop_delta_pp": 51.66006350914778,
+    "verdict": "PASS",
+    "rationale": "AIM full beats vector_only on multi-hop by +37.7pp (\u226515pp required) and ties/wins single-hop by +51.7pp."
+  }
+}

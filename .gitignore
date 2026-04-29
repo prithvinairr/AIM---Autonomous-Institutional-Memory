@@ -1,0 +1,94 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+.claude/
+.local/
+.obsidian/
+*.swp
+*.swo
+*~
+
+# Environment & secrets
+.env
+.env.local
+.env.production
+*.env
+!.env.example
+credentials.json
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Testing & coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+coverage.xml
+pytest-cache-files-*/
+pytest_tmp*/
+.pytest_tmp/
+.tmp/
+
+# Docker
+docker-compose.override.yml
+
+# Data
+*.db
+*.sqlite3
+neo4j_data/
+redis_data/
+qdrant_storage/
+storage/
+snapshots/
+.qdrant-initialized
+knowledge-graph/
+graphify-out/
+
+# Node / frontend
+node_modules/
+.next/
+out/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/tsconfig.tsbuildinfo
+
+# Logs and local run artifacts
+*.log
+.api-demo.*.log
+frontend/*.log
+
+# Local scratch / historical working notes
+complete_plan.txt
+phase2_context_*.txt
+phase2_output.txt
+eval_report*.md
+eval_report*.json
+!eval_report_after_teacher_bfs.md
+!eval_report_after_teacher_bfs.md.json

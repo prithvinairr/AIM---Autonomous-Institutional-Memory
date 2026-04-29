@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Root reset ─────────────────────────────────────────────────────────────── */
+:root {
+  --aim-bg: #030508;
+  --aim-accent: #3b82f6;
+  --aim-accent-dim: #1d4ed8;
+  --aim-surface: rgba(255, 255, 255, 0.03);
+  --aim-border: rgba(255, 255, 255, 0.06);
+  --aim-border-subtle: rgba(255, 255, 255, 0.04);
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --aim-bg: #f8fafc;
+    --aim-accent: #2563eb;
+    --aim-accent-dim: #1d4ed8;
+    --aim-surface: rgba(15, 23, 42, 0.035);
+    --aim-border: rgba(15, 23, 42, 0.1);
+    --aim-border-subtle: rgba(15, 23, 42, 0.07);
+  }
+
+  body {
+    color: #1f2937;
+  }
+
+  .noise-overlay::after {
+    opacity: 0.01;
+  }
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--aim-bg);
+  color: #cbd5e1;
+  overflow: hidden;
+}
+
+/* ── Custom scrollbar (WebKit) ──────────────────────────────────────────────── */
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ── Glass panel base ───────────────────────────────────────────────────────── */
+@layer components {
+  .glass-panel {
+    @apply rounded-2xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-3xl;
+  }
+
+  .glass-panel-subtle {
+    @apply rounded-xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-xl;
+  }
+
+  .glass-input {
+    @apply bg-white/[0.04] border border-white/[0.08] rounded-xl
+           text-white placeholder:text-slate-600 outline-none
+           focus:border-blue-500/40 focus:bg-white/[0.06]
+           transition-colors;
+  }
+
+  .label-xs {
+    @apply text-[9px] font-semibold uppercase tracking-[0.22em] text-slate-500;
+  }
+
+  .mono-xs {
+    @apply text-[8px] font-mono uppercase tracking-widest text-slate-600;
+  }
+}
+
+/* ── Prose overrides for markdown in dark theme ─────────────────────────────── */
+.prose-aim {
+  --tw-prose-body: #94a3b8;
+  --tw-prose-headings: #e2e8f0;
+  --tw-prose-links: #60a5fa;
+  --tw-prose-bold: #e2e8f0;
+  --tw-prose-code: #c4b5fd;
+  --tw-prose-pre-bg: rgba(255, 255, 255, 0.04);
+  --tw-prose-pre-code: #cbd5e1;
+  --tw-prose-bullets: #475569;
+  --tw-prose-counters: #475569;
+}
+
+.prose-aim pre {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.75rem;
+}
+
+.prose-aim code:not(pre code) {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 0.375rem;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.85em;
+}
+
+.prose-aim a {
+  text-decoration: none;
+  border-bottom: 1px solid rgba(96, 165, 250, 0.3);
+  transition: border-color 0.2s;
+}
+.prose-aim a:hover {
+  border-bottom-color: rgba(96, 165, 250, 0.8);
+}
+
+/* ── Noise texture overlay (subtle film grain) ──────────────────────────────── */
+.noise-overlay::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Selection color ────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+/* ── Safe area for notched mobile devices ───────────────────────────────────── */
+.safe-area-top {
+  padding-top: max(env(safe-area-inset-top, 0px), 0.75rem);
+}
+
+.safe-area-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 0.25rem);
+}
+
+/* ── Accessibility: screen-reader only ─────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ── Mobile readability: enforce minimum text sizes ─────────────────────────── */
+@media (max-width: 640px) {
+  body {
+    font-size: 14px;
+  }
+
+  .glass-input {
+    font-size: 16px !important; /* prevents iOS zoom on focus */
+    min-height: 44px;
+  }
+
+  /* Ensure all interactive elements meet 44x44px minimum */
+  button, [role="tab"], [role="button"], input, textarea, select {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}

@@ -1,0 +1,430 @@
+# AIM benchmark harness — ground-truth fixture (Phase A.2)
+#
+# Source of truth: aim/scripts/seed_demo.py ("Nexus Technologies" demo corpus).
+# Every fact asserted below is verifiable from that seed script.
+#
+# Entity id convention:
+#   gold_entities / gold_path values use the SLUG form (e.g. "sarah-chen",
+#   "svc-auth", "adr-003") — the same string passed to the seed's `_id()`
+#   helper. The harness projects these slugs to the real UUIDs at eval time
+#   via `uuid.uuid5(NAMESPACE_DNS, f"nexus.demo.{slug}")`. Slugs are used
+#   here so humans can diff-review the fixture without decoding UUIDs.
+#
+# Category distribution target (customer plan A.2):
+#   single_hop  ~30%  (one entity / direct-property lookup)
+#   multi_hop   ~40%  (requires 2+ relationship traversals; gold_path set)
+#   negative    ~20%  (no answer in corpus; gold_answer MUST be null)
+#   ambiguous   ~10%  (multiple defensible answers; pick one canonical)
+
+# ─── single_hop (9 items) ────────────────────────────────────────────────────
+
+- id: single-001
+  # Direct ownership lookup on svc-auth.
+  question: "Who owns the authentication service at Nexus?"
+  category: single_hop
+  hop_depth: 1
+  gold_answer: "Alex Rivera"
+  gold_entities:
+    - svc-auth
+    - alex-rivera
+
+- id: single-002
+  # Direct ownership lookup on the Kafka event bus.
+  question: "Who owns the Kafka event bus?"
+  category: single_hop
+  hop_depth: 1
+  gold_answer: "Marcus Johnson"
+  gold_entities:
+    - svc-events
+    - marcus-johnson
+
+- id: single-003
+  # Title field on Sarah Chen's Person node.
+  question: "What is Sarah Chen's job title at Nexus?"
+  category: single_hop
+  hop_depth: 1
+  gold_answer: "VP of Engineering"
+  gold_entities:
+    - sarah-chen
+
+- id: single-004
+  # Location field on David Okafor's Person node.
+  question: "Where is David Okafor based?"
+  category: single_hop
+  hop_depth: 1
+  gold_answer: "London"
+  gold_entities:
+    - david-okafor
+
+- id: single-005
+  # Tech stack on the svc-gateway Service node.
+  question: "What technology does the Nexus API Gateway run on?"
+  category: single_hop
+  hop_depth: 1
+  gold_answer: "Kong"
+  gold_entities:
+    - svc-gateway
+
+- id: single-006
+  # ADR-004 title / subject.
+  question: "What does ADR-004 cover?"
+  category: single_hop
+  hop_depth: 1
+  gold_answer: "Frontend migration from Create React App to Next.js 14"
+  gold_entities:
+    - adr-004
+
+- id: single-007
+  # Severity field on INC-2025-012.
+  question: "What severity was the feature store Redis failover incident (INC-2025-012)?"
+  category: single_hop
+  hop_depth: 1
+  gold_answer: "P1"
+  gold_entities:
+    - inc-2025-012
+
+- id: single-008
+  # Lead of Project Horizon per project description.
+  question: "Who is the tech lead for Project Horizon?"
+  category: single_hop
+  hop_depth: 1
+  gold_answer: "David Okafor"
+  gold_entities:
+    - proj-horizon
+    - david-okafor
+
+- id: single-009
+  # Author of the incident-response playbook doc.
+  question: "Who owns the Incident Response Playbook?"
+  category: single_hop
+  hop_depth: 1
+  gold_answer: "David Okafor"
+  gold_entities:
+    - doc-incident-response
+    - david-okafor
+
+# ─── multi_hop (12 items) ────────────────────────────────────────────────────
+
+- id: multi-001
+  # svc-auth → alex-rivera (OWNS) → adr-003 (PROPOSED_BY)
+  question: "Which ADR was authored by the owner of the auth service, and what did it change?"
+  category: multi_hop
+  hop_depth: 2
+  gold_answer: "ADR-003 — migrated authentication from server-side sessions to JWT with refresh token rotation"
+  gold_entities:
+    - svc-auth
+    - alex-rivera
+    - adr-003
+  gold_path:
+    - svc-auth
+    - alex-rivera
+    - adr-003
+
+- id: multi-002
+  # inc-2025-003 → svc-events (IMPACTED/CAUSED_BY) → marcus-johnson (OWNS)
+  question: "Who owns the service that was impacted by the March 2025 Kafka consumer lag incident?"
+  category: multi_hop
+  hop_depth: 2
+  gold_answer: "Marcus Johnson"
+  gold_entities:
+    - inc-2025-003
+    - svc-events
+    - marcus-johnson
+  gold_path:
+    - inc-2025-003
+    - svc-events
+    - marcus-johnson
+
+- id: multi-003
+  # proj-aurora → priya-patel (LEADS_PROJECT) → team-ml (LEADS)
+  question: "Which team is led by the tech lead of Project Aurora?"
+  category: multi_hop
+  hop_depth: 2
+  gold_answer: "ML Infrastructure Team"
+  gold_entities:
+    - proj-aurora
+    - priya-patel
+    - team-ml
+  gold_path:
+    - proj-aurora
+    - priya-patel
+    - team-ml
+
+- id: multi-004
+  # adr-003 SUPERSEDES adr-005 — both AFFECT svc-auth
+  question: "Which ADR did ADR-003 supersede, and what service did it relate to?"
+  category: multi_hop
+  hop_depth: 2
+  gold_answer: "ADR-005 (legacy session-based authentication) — it related to the Auth Service"
+  gold_entities:
+    - adr-003
+    - adr-005
+    - svc-auth
+  gold_path:
+    - adr-003
+    - adr-005
+    - svc-auth
+
+# --- healthcare second-domain fixture ---------------------------------------
+
+- id: healthcare-001
+  question: "Which study was Patient Amara enrolled in?"
+  category: single_hop
+  hop_depth: 1
+  gold_answer: "Patient Amara was enrolled in the RENAL-AI Study"
+  gold_entities:
+    - c0e25431-5488-5576-96c7-9e162b4f2e05
+    - 1a71510a-a43d-5262-96d7-2049cdf58a2c
+  gold_path:
+    - c0e25431-5488-5576-96c7-9e162b4f2e05
+    - 1a71510a-a43d-5262-96d7-2049cdf58a2c
+
+- id: healthcare-002
+  question: "What treatment did RENAL-AI test, and what outcome followed it?"
+  category: multi_hop
+  hop_depth: 3
+  gold_answer: "RENAL-AI tested the SGLT2 Renal Protection Protocol, which was followed by a stable eGFR outcome"
+  gold_entities:
+    - 1a71510a-a43d-5262-96d7-2049cdf58a2c
+    - 3c290304-6091-5b8f-b1d3-fcf2f8b91046
+    - a4cce298-85e0-551f-94a0-32d8361b32ab
+  gold_path:
+    - 1a71510a-a43d-5262-96d7-2049cdf58a2c
+    - 3c290304-6091-5b8f-b1d3-fcf2f8b91046
+    - a4cce298-85e0-551f-94a0-32d8361b32ab
+
+- id: healthcare-003
+  question: "Who approved the protocol amendment supporting Patient Amara's treatment?"
+  category: multi_hop
+  hop_depth: 4
+  gold_answer: "Dr. Meera Rana approved Protocol Amendment 7, which supported the SGLT2 renal-protection treatment"
+  gold_entities:
+    - c0e25431-5488-5576-96c7-9e162b4f2e05
+    - 3c290304-6091-5b8f-b1d3-fcf2f8b91046
+    - e1c1b716-2817-5cb9-b99b-f10ba2145c9e
+    - 973dfb7a-3a54-5473-95b0-160f1500d2f4
+  gold_path:
+    - c0e25431-5488-5576-96c7-9e162b4f2e05
+    - 3c290304-6091-5b8f-b1d3-fcf2f8b91046
+    - e1c1b716-2817-5cb9-b99b-f10ba2145c9e
+    - 973dfb7a-3a54-5473-95b0-160f1500d2f4
+
+- id: multi-005
+  # inc-2025-007 LED_TO proj-fortress, led by alex-rivera
+  question: "Which project was accelerated by the auth service memory leak incident, and who leads it?"
+  category: multi_hop
+  hop_depth: 2
+  gold_answer: "Project Fortress, led by Alex Rivera"
+  gold_entities:
+    - inc-2025-007
+    - proj-fortress
+    - alex-rivera
+  gold_path:
+    - inc-2025-007
+    - proj-fortress
+    - alex-rivera
+
+- id: multi-006
+  # svc-frontend → emma-nakamura (OWNS) → adr-004 (PROPOSED_BY)
+  question: "Who owns the customer-facing web app, and which ADR did that person propose?"
+  category: multi_hop
+  hop_depth: 2
+  gold_answer: "Emma Nakamura owns the web app; she proposed ADR-004 (Next.js 14 migration)"
+  gold_entities:
+    - svc-frontend
+    - emma-nakamura
+    - adr-004
+  gold_path:
+    - svc-frontend
+    - emma-nakamura
+    - adr-004
+
+- id: multi-007
+  # svc-search DEPENDS_ON svc-feature-store; svc-feature-store owned by priya-patel
+  question: "Who owns the downstream dependency that the Search Service calls for real-time features?"
+  category: multi_hop
+  hop_depth: 2
+  gold_answer: "Priya Patel (owner of the Feature Store)"
+  gold_entities:
+    - svc-search
+    - svc-feature-store
+    - priya-patel
+  gold_path:
+    - svc-search
+    - svc-feature-store
+    - priya-patel
+
+- id: multi-008
+  # adr-001 proposed by marcus-johnson, approved by sarah-chen
+  question: "Who proposed ADR-001 and who approved it?"
+  category: multi_hop
+  hop_depth: 2
+  gold_answer: "Marcus Johnson proposed it; Sarah Chen approved it"
+  gold_entities:
+    - adr-001
+    - marcus-johnson
+    - sarah-chen
+  gold_path:
+    - adr-001
+    - marcus-johnson
+    - sarah-chen
+
+- id: multi-009
+  # inc-2025-012 → priya-patel (RESPONDED_TO as IC) → sarah-chen (MANAGES priya-patel)
+  question: "Who manages the incident commander that responded to the feature store Redis failover?"
+  category: multi_hop
+  hop_depth: 2
+  gold_answer: "Sarah Chen"
+  gold_entities:
+    - inc-2025-012
+    - priya-patel
+    - sarah-chen
+  gold_path:
+    - inc-2025-012
+    - priya-patel
+    - sarah-chen
+
+- id: multi-010
+  # proj-fortress → svc-auth (PART_OF) and svc-gateway (PART_OF)
+  question: "Which services are part of Project Fortress?"
+  category: multi_hop
+  hop_depth: 2
+  gold_answer: "The Auth Service and the API Gateway"
+  gold_entities:
+    - proj-fortress
+    - svc-auth
+    - svc-gateway
+  gold_path:
+    - proj-fortress
+    - svc-auth
+    - svc-gateway
+
+- id: multi-011
+  # runbook-kafka authored by marcus-johnson, who leads team-platform
+  question: "Which team does the author of the Kafka Incident Runbook lead?"
+  category: multi_hop
+  hop_depth: 2
+  gold_answer: "Platform Team"
+  gold_entities:
+    - runbook-kafka
+    - marcus-johnson
+    - team-platform
+  gold_path:
+    - runbook-kafka
+    - marcus-johnson
+    - team-platform
+
+- id: multi-012
+  # adr-001-v3 SUPERSEDES adr-001-v2 SUPERSEDES adr-001-v1 — three-hop chain
+  question: "Walk the version chain of ADR-001: which version superseded which?"
+  category: multi_hop
+  hop_depth: 3
+  gold_answer: "v2 superseded v1, then v3 superseded v2 — v3 is the current accepted version"
+  gold_entities:
+    - adr-001-v1
+    - adr-001-v2
+    - adr-001-v3
+  gold_path:
+    - adr-001-v1
+    - adr-001-v2
+    - adr-001-v3
+
+# ─── negative (6 items) ──────────────────────────────────────────────────────
+
+- id: negative-001
+  # No person named "Jordan Mitchell" in the corpus.
+  question: "Who is Jordan Mitchell, and what team do they work on?"
+  category: negative
+  hop_depth: 0
+  gold_answer: null
+  gold_entities: []
+
+- id: negative-002
+  # ADR-007 does not exist — ADRs go 001-006 (with 006 retracted).
+  question: "What does ADR-007 say about database sharding?"
+  category: negative
+  hop_depth: 0
+  gold_answer: null
+  gold_entities: []
+
+- id: negative-003
+  # No "payment service" or billing service exists in the corpus.
+  question: "Who owns the payment processing service at Nexus?"
+  category: negative
+  hop_depth: 0
+  gold_answer: null
+  gold_entities: []
+
+- id: negative-004
+  # No incident with id INC-2025-020 — corpus has 003, 007, 012.
+  question: "What was the root cause of INC-2025-020?"
+  category: negative
+  hop_depth: 0
+  gold_answer: null
+  gold_entities: []
+
+- id: negative-005
+  # Frontend team has no stated on-call rotation; only Platform does.
+  question: "What is the on-call rotation schedule for the Frontend team?"
+  category: negative
+  hop_depth: 0
+  gold_answer: null
+  gold_entities: []
+
+- id: negative-006
+  # Salary / compensation data is not in the corpus at all.
+  question: "What is Alex Rivera's annual salary?"
+  category: negative
+  hop_depth: 0
+  gold_answer: null
+  gold_entities: []
+
+# ─── ambiguous (4 items) ─────────────────────────────────────────────────────
+
+- id: ambiguous-001
+  # Three people named "Alex" in corpus (Rivera, Chen, Kim). Rivera is the
+  # canonical "Alex" at Nexus (Senior Backend Engineer, owns auth service).
+  question: "Who is Alex at Nexus?"
+  category: ambiguous
+  hop_depth: 1
+  gold_answer: "Alex Rivera — Senior Backend Engineer who owns the authentication service"
+  gold_entities:
+    - alex-rivera
+    - person-alex-frontend
+    - person-alex-backend
+
+- id: ambiguous-002
+  # Multiple people touch ML infra (Priya owns it, Marcus collaborates on
+  # Kafka consumer framework). Priya is the canonical owner.
+  question: "Who works on ML infrastructure at Nexus?"
+  category: ambiguous
+  hop_depth: 2
+  gold_answer: "Priya Patel — she leads the ML Infrastructure team and owns the feature store and search service"
+  gold_entities:
+    - priya-patel
+    - team-ml
+    - marcus-johnson
+
+- id: ambiguous-003
+  # David and Marcus both responded to INC-2025-003 (Marcus as IC, David as
+  # SRE). "Who fixed" is ambiguous; Marcus was Incident Commander.
+  question: "Who fixed the Kafka consumer lag incident in March 2025?"
+  category: ambiguous
+  hop_depth: 2
+  gold_answer: "Marcus Johnson (Incident Commander), with David Okafor as SRE responder"
+  gold_entities:
+    - inc-2025-003
+    - marcus-johnson
+    - david-okafor
+
+- id: ambiguous-004
+  # Several ADRs relate to auth: ADR-003 (current JWT) and ADR-005 (legacy
+  # session, superseded). ADR-003 is the current authoritative answer.
+  question: "Which ADR governs authentication at Nexus?"
+  category: ambiguous
+  hop_depth: 2
+  gold_answer: "ADR-003 (JWT with refresh token rotation) — it supersedes ADR-005 (legacy session-based auth)"
+  gold_entities:
+    - adr-003
+    - adr-005
+    - svc-auth
