@@ -34,7 +34,5 @@ Not complete:
 
 ## Reporting
 
-This is currently a portfolio/research project. If you find a real security
-issue, open a private issue or contact the maintainer directly rather than
-posting exploit details publicly.
+This is currently a portfolio/research project. 
 
