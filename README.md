@@ -218,19 +218,36 @@ The benchmark runs `vector_only`, `graph_only`, and `aim_full` against the same 
 
 ---
 
-## Honest limitations
+## Limitations
 
-AIM is a strong prototype, not a finished enterprise product.
+AIM is ready to demo and evaluate, but it is still a research-grade system. The
+core graph retrieval loop is working; the remaining work is mostly about larger
+evaluation, production hardening, and reducing dependence on small local models.
 
-- **Multi-hop retrieval is strong on the current fixture, but the fixture is small** (34 items, ±0.025 NDCG variance band). Real evaluation belongs on HotpotQA / MuSiQue.
-- **Citation precision is mediocre on local Qwen-7B** (0.36 multi-hop). Better instruction-following models (Claude, GPT-4) push this above 0.70 with no code changes.
-- **Multi-hop p50 is 29s** on local CPU inference. Architecture is parallelized; the floor is the synthesizer LLM.
-- **Slack live ingest is wired and proven; Jira and Confluence webhook endpoints exist** but haven't been integration-tested against real workspaces.
-- **Live-ingest extraction depends on relationship-verb recall.** Sparse phrasings may produce sparse graph footprints — AIM correctly stays terse rather than fabricating.
-- **The frontend is demo-polished, not a full design-system implementation.**
-- **Prompt-injection defense and PII redaction at ingest** need a dedicated security pass before any production rollout.
+- The current benchmark is intentionally transparent, but small: 34 labeled
+  questions. The next useful step is to run the same retrieval stack against a
+  larger public multi-hop set such as HotpotQA, MuSiQue, or 2WikiMultihopQA.
+- Citation quality is the weakest measured area on the local Qwen setup. The
+  graph often finds the right path, but the local synthesizer is not always
+  disciplined about citing it. Stronger instruction-following models should
+  improve this, but the repo keeps the local-first path as the default.
+- Deep multi-hop answers are not instant. On the saved eval run, AIM's multi-hop
+  p50 is about 29 seconds because the pipeline does decomposition, graph search,
+  vector retrieval, synthesis, and provenance construction.
+- Slack ingest has been exercised end-to-end. Jira and Confluence support are
+  present in the architecture, but still need real-workspace soak testing.
+- Live extraction works best when messages use clear relationship language such
+  as "caused by", "impacted", "owned by", or "approved by". Ambiguous messages
+  may create sparse graph facts; in that case AIM is designed to answer narrowly
+  or abstain rather than fill in missing evidence.
+- The frontend is polished enough for a technical demo, but it is not yet a full
+  product design system with every loading, empty, error, and accessibility
+  state refined.
+- Before production use, the security layer needs a dedicated pass for
+  prompt-injection handling, ingest-time PII redaction, tenant policy review,
+  and deployment-specific access controls.
 
-Full v2 roadmap in [`LIMITATIONS.md`](LIMITATIONS.md).
+The detailed roadmap is in [`LIMITATIONS.md`](LIMITATIONS.md).
 
 ---
 
