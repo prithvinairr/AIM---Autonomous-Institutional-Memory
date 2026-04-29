@@ -263,9 +263,13 @@ That ~30-line block is the move that crossed the customer A.2 gate. The rest of 
 
 ## Publishing
 
-The repository is intended to ship without local secrets. Runtime keys belong in `.env` and `frontend/.env.local`, both git-ignored. Commit `.env.example` and `frontend/.env.local.example` only.
+This repository is structured so it can be shared publicly without exposing
+local credentials or runtime state. Keep real API keys and deployment-specific
+configuration in `.env` and `frontend/.env.local`; both files are excluded from
+version control. The committed example files document the required settings
+without containing working secrets.
 
-Pre-publish checks:
+Recommended release checks:
 
 ```bash
 npm --prefix frontend audit --audit-level=moderate
@@ -273,7 +277,10 @@ python -m pip_audit
 python -m pytest -p no:cacheprovider tests/unit tests/eval -q
 ```
 
-Then install with your own credentials by copying the example env files and filling in Neo4j, LLM, Slack, Jira, or Pinecone keys as needed.
+For a fresh install, copy `.env.example` to `.env` and
+`frontend/.env.local.example` to `frontend/.env.local`, then provide the
+credentials for the services you plan to use: Neo4j, a local or hosted LLM,
+Slack, Jira, Confluence, Pinecone, or Qdrant.
 
 ---
 
