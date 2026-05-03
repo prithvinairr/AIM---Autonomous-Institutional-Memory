@@ -1,57 +1,77 @@
-# AIM — Autonomous Institutional Memory
+<p align="center">
+  <strong>AIM</strong>
+</p>
 
-Graph-backed, local-first institutional memory for engineering teams. AIM ingests operational context from Slack/Jira/Confluence, extracts typed entities and relationships, retrieves with Neo4j + vector search, and answers with provenance instead of treating company memory as flat text.
+<h1 align="center">Autonomous Institutional Memory</h1>
 
-![AIM dashboard answering an incident query, with retrieved sources, the live knowledge nebula, and provenance-tracked synthesis](docs/images/aim-dashboard-answer.png)
+<p align="center">
+  A local-first GraphRAG system that turns engineering context into a queryable,
+  provenance-aware memory layer.
+</p>
 
----
+<p align="center">
+  <a href="#run-locally">Run locally</a> ·
+  <a href="#benchmark">Benchmark</a> ·
+  <a href="#architecture">Architecture</a> ·
+  <a href="#slack-live-ingest">Slack ingest</a> ·
+  <a href="LIMITATIONS.md">Limitations</a>
+</p>
 
-## Why this exists
+<p align="center">
+  <img alt="Python 3.12+" src="https://img.shields.io/badge/Python-3.12%2B-3776AB?style=flat-square&logo=python&logoColor=white">
+  <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-Backend-009688?style=flat-square&logo=fastapi&logoColor=white">
+  <img alt="LangGraph" src="https://img.shields.io/badge/LangGraph-Agent-1f6feb?style=flat-square">
+  <img alt="Neo4j" src="https://img.shields.io/badge/Neo4j-Knowledge_Graph-4581C3?style=flat-square&logo=neo4j&logoColor=white">
+  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-Frontend-000000?style=flat-square&logo=nextdotjs&logoColor=white">
+  <img alt="Local first" src="https://img.shields.io/badge/Local--first-Ollama%20%2B%20Qdrant-22c55e?style=flat-square">
+</p>
 
-Most workplace RAG demos are document search with a chat box. AIM is aimed at a harder class of questions:
+<p align="center">
+  <img src="docs/images/aim-dashboard-answer.png" alt="AIM dashboard answering an incident query with retrieved sources, knowledge nebula, and provenance-backed synthesis" width="100%">
+</p>
 
-- *Which service did this incident affect?*
-- *Who responded, and which team reported it?*
-- *Which ADR superseded the decision that caused that outage?*
-- *What path connects a Slack message, a runbook, a service, and an owner?*
+## Overview
 
-Those answers are graph-shaped. AIM stores and retrieves them as graph-shaped evidence, then synthesizes with citations back to the edges.
+Most workplace RAG systems are document search with a chat box. AIM is built for
+questions where the answer is a relationship, not a paragraph:
 
----
+- Which service did this incident affect?
+- Who responded, and which team reported it?
+- Which decision superseded the policy that caused the outage?
+- What path connects a Slack message, a runbook, a service, and an owner?
 
-## What AIM does
+AIM ingests operational context, extracts typed entities and relationships,
+stores them in Neo4j and Qdrant, and answers with evidence paths instead of flat
+snippets. The goal is not just retrieval. The goal is institutional memory that
+can explain where an answer came from.
 
-- **Live Slack ingest** — Slack Events API → HMAC-signed webhook → LLM extractor → Neo4j graph facts. Live in ~17 seconds end-to-end.
-- **GraphRAG + vector retrieval** — Neo4j typed relationships joined with semantic vector search.
-- **Multi-hop reasoning** — decomposes the query, expands graph neighborhoods, scores paths, synthesizes a grounded answer.
-- **Provenance maps** — every response carries graph nodes, graph edges, source IDs, citations, and a reasoning trace.
-- **Exact-incident guardrails** — direct incident questions answer from recorded graph facts or abstain. No nearby-incident inference.
-- **Local-first inference** — default path uses Ollama (Qwen 2.5-7B) with local embeddings; no API key required to run the full stack.
-- **Streaming frontend** — Next.js console with retrieved sources, reasoning status, and a 3D knowledge nebula.
+## What AIM Does
 
----
+| Capability | What it means |
+|---|---|
+| Live Slack ingest | Slack Events API -> signed FastAPI webhook -> extractor -> Neo4j + Qdrant in seconds. |
+| GraphRAG + vector retrieval | Typed graph traversal is combined with semantic vector search. |
+| Multi-hop reasoning | The agent decomposes a query, expands graph neighborhoods, scores paths, and synthesizes a grounded answer. |
+| Provenance maps | Responses carry graph nodes, graph edges, source IDs, citations, and a reasoning trace. |
+| Exact-incident guardrails | Direct incident questions answer from recorded facts or abstain; nearby incidents are not allowed to bleed in. |
+| Local-first inference | The default path runs with Ollama and local embeddings. API-backed models are optional. |
+| Demo-grade frontend | Next.js console with retrieved sources, streaming status, and a 3D knowledge nebula. |
 
-## The wow moment — live ingest in 17 seconds
+## Demo Flow
 
-A real Slack message becomes a queryable graph fact:
+| Live ingest | Streaming retrieval | Grounded answer |
+|---|---|---|
+| <img src="docs/images/slack-live-ingest.png" alt="Slack workspace with live incident messages flowing into AIM"> | <img src="docs/images/aim-dashboard-thinking.png" alt="AIM frontend while a deep query is processing"> | <img src="docs/images/aim-dashboard-answer.png" alt="AIM frontend after answering an incident query"> |
 
-![Slack workspace with live incident messages flowing into AIM](docs/images/slack-live-ingest.png)
+The important part: there is no nightly re-indexing job in this demo path. A
+Slack message arrives, AIM extracts entities and relationships, writes graph and
+vector records, and the next query can retrieve the new fact.
 
-The frontend streams while the agent decomposes and retrieves:
+## Benchmark
 
-![AIM dashboard while a deep query is processing](docs/images/aim-dashboard-thinking.png)
+Latest saved run: [`docs/benchmarks/eval_report_after_teacher_bfs.md`](docs/benchmarks/eval_report_after_teacher_bfs.md)
 
-Then renders sources, graph context, and the answer:
-
-![AIM dashboard after answering an incident query](docs/images/aim-dashboard-answer.png)
-
-No re-indexing job, no nightly batch. The webhook fires, the extractor pulls entities + relationships, Neo4j and the vector store both update, and the next query sees it.
-
----
-
-## Benchmark — current numbers
-
-Latest saved run: [`docs/benchmarks/eval_report_after_teacher_bfs.md`](docs/benchmarks/eval_report_after_teacher_bfs.md). Fixture: 34 gold-labeled items in `tests/eval/fixtures/ground_truth.yaml`.
+Fixture: 34 gold-labeled items in [`tests/eval/fixtures/ground_truth.yaml`](tests/eval/fixtures/ground_truth.yaml)
 
 | System | Overall NDCG@10 | Multi-hop NDCG@10 | Multi-hop Path Acc | Multi-hop Citation | p50 Latency |
 |---|---:|---:|---:|---:|---:|
@@ -59,82 +79,81 @@ Latest saved run: [`docs/benchmarks/eval_report_after_teacher_bfs.md`](docs/benc
 | `graph_only` | 0.548 | 0.799 | 0.720 | **0.500** | **6.3s** |
 | **`aim_full`** | **0.659** | **0.836** | **0.839** | 0.363 | 29.1s |
 
-**Headline:**
+What this supports:
 
-- AIM beats `vector_only` by **+37.7pp** on multi-hop NDCG.
-- AIM beats `graph_only` on **overall NDCG**, **multi-hop NDCG**, and **multi-hop path accuracy**.
+- AIM beats `vector_only` by **+37.7 percentage points** on multi-hop NDCG.
+- AIM beats `graph_only` on **overall NDCG**, **multi-hop NDCG**, and
+  **multi-hop path accuracy**.
 - `graph_only` still wins on citation precision and latency.
 
-This is not a SOTA claim — it's evidence that AIM is more than a standard RAG wrapper on this fixture. Full methodology, ablations, and per-category tables in [`BENCHMARKS.md`](BENCHMARKS.md).
-
----
+This is not a SOTA claim. It is evidence that AIM is more than a standard vector
+RAG wrapper on this fixture. Full methodology, ablations, and per-category
+tables are in [`BENCHMARKS.md`](BENCHMARKS.md).
 
 ## Architecture
 
 ```text
 Slack / Jira / Confluence
-        │
-        ▼
+        |
+        v
 FastAPI signed webhooks
-        │
-        ▼
-Ingest worker → LLM extractor → deduplicator → Neo4j + Qdrant
+        |
+        v
+Ingest worker -> LLM extractor -> deduplicator -> Neo4j + Qdrant
 
 User query
-        │
-        ▼
-FastAPI /query  or  /query/stream  (SSE)
-        │
-        ▼
+        |
+        v
+FastAPI /query or /query/stream
+        |
+        v
 LangGraph agent
-  decomposer       → sub-queries + intent + entity pairs
-  graph_searcher   → Neo4j hybrid (fulltext + vector + path scoring)
-  vector_retriever → Qdrant ANN
-  mcp_fetcher      → optional live Slack/Jira context
-  synthesizer      → grounded answer + citations + provenance
-        │
-        ▼
-Next.js frontend → decision console + sources + knowledge nebula
+  decomposer        -> sub-queries, intent, entity pairs
+  graph_searcher    -> Neo4j hybrid search, path scoring, exact-incident checks
+  vector_retriever  -> Qdrant approximate nearest neighbor retrieval
+  mcp_fetcher       -> optional live tool/context fetch
+  synthesizer       -> grounded answer, citations, provenance graph
+        |
+        v
+Next.js frontend -> decision console, sources, knowledge nebula
 ```
 
-**Single-worker constraint:** the compiled LangGraph and in-process token buckets are module-level singletons. Run one worker per process; scale horizontally behind a load balancer.
-
----
+Single-worker note: the compiled LangGraph and in-process token buckets are
+module-level singletons. Run one worker per process and scale horizontally behind
+a load balancer.
 
 ## Stack
 
 | Layer | Choice | Why |
 |---|---|---|
-| API | FastAPI | Streaming SSE + async route handlers |
-| Agent orchestration | LangGraph | Stateful pipeline with proper reducers and parallel fan-out |
-| Knowledge graph | Neo4j 5.24 + APOC | Cypher path queries, fulltext + vector indexes co-located |
-| Vector store | Qdrant (default), Pinecone (opt) | Local-first; no API key needed |
-| LLM (default) | Qwen 2.5-7B via Ollama | Sovereign — runs on your laptop, no data leaves |
-| LLM (alt) | Claude / GPT-4 via API | Set `LLM_PROVIDER=anthropic` or `openai` |
-| Embeddings | nomic-embed-text (768-d) | Local, runs alongside the LLM |
-| Frontend | Next.js 16 standalone | SSR + client hydration, dark theme, 3D nebula |
-| Cache + threads | Redis (degrades to in-memory) | Optional; the system survives without it |
-| Webhook security | HMAC-SHA256 per platform | Slack signing-secret pattern, replay-safe |
+| API | FastAPI | Async routes, signed webhooks, SSE streaming. |
+| Agent orchestration | LangGraph | Stateful graph pipeline with reducers and parallel fan-out. |
+| Knowledge graph | Neo4j 5.24 + APOC | Cypher path queries with fulltext and vector indexes nearby. |
+| Vector store | Qdrant by default, Pinecone optional | Local-first by default; hosted option available. |
+| LLM | Ollama-compatible local model by default | Keeps the full demo runnable without paid API keys. |
+| API LLMs | Anthropic or OpenAI optional | Higher-quality synthesis path when keys are available. |
+| Embeddings | `nomic-embed-text` | Local 768-dimensional embeddings. |
+| Frontend | Next.js standalone | Production build can run with Node directly. |
+| Cache and threads | Redis optional | Falls back to in-memory behavior when Redis is absent. |
+| Webhook security | HMAC-SHA256 | Slack-style signing-secret verification with replay checks. |
 
----
+## Run Locally
 
-## Run locally
-
-Requires Python 3.12+, Node 22+, Neo4j 5.24+, Qdrant 1.11+, and either
-Ollama for local-LLM mode or an Anthropic/OpenAI API key.
+Requires Python 3.12+, Node 22+, Neo4j 5.24+, Qdrant 1.11+, and either Ollama
+for local-LLM mode or an Anthropic/OpenAI API key.
 
 Backend:
 
 ```bash
 pip install -e ".[dev]"
-cp .env.example .env   # set NEO4J_PASSWORD at minimum
+cp .env.example .env
 
-# Start dependencies separately:
-#   - Neo4j  on bolt://localhost:7687
-#   - Qdrant on http://localhost:6333
-#   - Ollama on http://localhost:11434/v1   (or set LLM_PROVIDER + key)
+# Set NEO4J_PASSWORD at minimum.
+# Start Neo4j on bolt://localhost:7687
+# Start Qdrant on http://localhost:6333
+# Start Ollama on http://localhost:11434/v1, or configure an API LLM provider.
 
-python -m scripts.seed_demo   # loads the demo corpus (~250 entities)
+python -m aim.scripts.seed_demo
 uvicorn aim.main:app --workers 1 --port 8000
 ```
 
@@ -148,46 +167,64 @@ npm run build
 node .next/standalone/server.js
 ```
 
-Open `http://localhost:3000`. Note: do not use `next start` — the build is configured for standalone runtime.
+Open `http://localhost:3000`.
 
----
+Do not use `next start` for this project. The frontend is configured for the
+Next.js standalone runner.
 
-## Public demo with Cloudflare Tunnel
+## Public Demo With Cloudflare Tunnel
 
-For a temporary public URL without committing any secrets:
+For a temporary public demo without committing secrets:
 
 ```bash
 # Backend
 cloudflared tunnel --url http://localhost:8000
 
-# Frontend (separate terminal)
+# Frontend, in a separate terminal
 cloudflared tunnel --url http://localhost:3000
 ```
 
-Use the frontend tunnel URL as the public demo link. Use the backend tunnel URL for the Slack Event Subscription:
+Share the frontend tunnel URL. Use the backend tunnel URL for webhook providers:
 
 ```text
 https://<your-backend-tunnel>/webhooks/slack/events
 ```
 
-Quick-tunnel URLs are temporary and change when `cloudflared` restarts. For a permanent demo, use a named Cloudflare tunnel with a custom domain, or deploy the Next.js frontend to Vercel and host the backend separately.
+Quick-tunnel URLs are temporary and change when `cloudflared` restarts. For a
+permanent demo, use a named Cloudflare tunnel with a custom domain, or deploy
+the Next.js frontend to a platform such as Vercel and host the backend
+separately.
 
----
+## Slack Live Ingest
 
-## Slack live ingest
+1. Create a Slack app.
+2. Set `WEBHOOK_SLACK_SIGNING_SECRET` and `SLACK_BOT_TOKEN` in `.env`.
+3. Expose the backend with a tunnel.
+4. Set Slack Event Subscriptions to:
 
-1. Create a Slack app and set `WEBHOOK_SLACK_SIGNING_SECRET` + `SLACK_BOT_TOKEN` in `.env`.
-2. Expose the backend with a tunnel (see above).
-3. Set the Slack Event Subscriptions request URL to `https://<tunnel>/webhooks/slack/events`.
-4. Subscribe to `message.channels`, reinstall the app, invite the bot to a channel, post:
+   ```text
+   https://<tunnel>/webhooks/slack/events
+   ```
 
-   > *"INC-2025-100 was caused by the Auth Service rate limiter rejecting requests after the 10am deploy. Marcus from the SRE team is leading the rollback."*
+5. Subscribe to `message.channels`, reinstall the app, and invite the bot to a
+   channel.
+6. Post a relationship-explicit incident message:
 
-5. Ask AIM:
+   ```text
+   INC-2025-100 was caused by the Auth Service rate limiter rejecting requests
+   after the 10am deploy. Marcus from the SRE team is leading the rollback.
+   ```
 
-   > *"Which service did INC-2025-100 affect, and who's leading the response?"*
+7. Ask AIM:
 
-If the graph has the edge, AIM answers from the edge. If the graph doesn't, AIM refuses to infer from nearby incidents (the exact-incident guardrail).
+   ```text
+   Which service did INC-2025-100 affect, and who is leading the response?
+   ```
+
+Live extraction works best when messages include explicit relationship language:
+`caused by`, `impacted`, `owned by`, `approved by`, `reported by`, `leading`, or
+`superseded`. If the graph does not contain the edge, AIM is designed to answer
+narrowly or abstain instead of borrowing facts from nearby incidents.
 
 You can also replay a signed Slack event locally:
 
@@ -195,18 +232,14 @@ You can also replay a signed Slack event locally:
 python scripts/replay_slack_event.py
 ```
 
-**One thing to know about live ingest:** the LLM extractor's recall on relationship verbs is sensitive to wording. Phrasings like *"caused by"*, *"impacted"*, *"led to"*, *"approved by"*, *"leading the response"* extract cleanly. Casual phrasings like *"X is on it"* or *"X broke after deploy"* may get partially captured. For best results, write Slack messages with at least one explicit verb cue per relationship.
-
----
-
-## Test and benchmark
+## Tests And Evaluation
 
 ```bash
-pytest                                                # unit + integration: 1,141 tests
-PYTHONIOENCODING=utf-8 python scripts/eval_live.py    # full benchmark on the 34-item fixture
+pytest
+PYTHONIOENCODING=utf-8 python scripts/eval_live.py --out eval_report.md
 ```
 
-Targeted verification of the incident guardrail and ingest extraction:
+Targeted checks for incident guardrails and streaming:
 
 ```bash
 pytest tests/unit/test_exact_incident_fast_path.py \
@@ -214,59 +247,49 @@ pytest tests/unit/test_exact_incident_fast_path.py \
        tests/integration/test_streaming.py
 ```
 
-The benchmark runs `vector_only`, `graph_only`, and `aim_full` against the same fixture and writes a markdown report with per-category NDCG, citation accuracy, path accuracy, negative-rejection rate, and p50 latency.
-
----
+The live benchmark runs `vector_only`, `graph_only`, and `aim_full` against the
+same fixture and reports NDCG, path accuracy, citation behavior, negative
+rejection, and p50 latency.
 
 ## Limitations
 
 AIM is ready to demo and evaluate, but it is still a research-grade system. The
-core graph retrieval loop is working; the remaining work is mostly about larger
-evaluation, production hardening, and reducing dependence on small local models.
+core graph retrieval loop is working; the remaining work is larger evaluation,
+production hardening, and reducing dependence on small local models.
 
-- The current benchmark is intentionally transparent, but small: 34 labeled
-  questions. The next useful step is to run the same retrieval stack against a
-  larger public multi-hop set such as HotpotQA, MuSiQue, or 2WikiMultihopQA.
-- Citation quality is the weakest measured area on the local Qwen setup. The
+- The benchmark is intentionally transparent but small: 34 labeled questions.
+  The next serious validation step is HotpotQA, MuSiQue, or 2WikiMultihopQA.
+- Citation quality is the weakest measured area on the local model path. The
   graph often finds the right path, but the local synthesizer is not always
-  disciplined about citing it. Stronger instruction-following models should
-  improve this, but the repo keeps the local-first path as the default.
-- Deep multi-hop answers are not instant. On the saved eval run, AIM's multi-hop
-  p50 is about 29 seconds because the pipeline does decomposition, graph search,
-  vector retrieval, synthesis, and provenance construction.
+  disciplined about citing it.
+- Deep multi-hop answers are not instant. The saved eval run has a p50 latency
+  of 29.1 seconds for `aim_full`.
 - Slack ingest has been exercised end-to-end. Jira and Confluence support are
-  present in the architecture, but still need real-workspace soak testing.
-- Live extraction works best when messages use clear relationship language such
-  as "caused by", "impacted", "owned by", or "approved by". Ambiguous messages
-  may create sparse graph facts; in that case AIM is designed to answer narrowly
-  or abstain rather than fill in missing evidence.
-- The frontend is polished enough for a technical demo, but it is not yet a full
-  product design system with every loading, empty, error, and accessibility
-  state refined.
-- Before production use, the security layer needs a dedicated pass for
-  prompt-injection handling, ingest-time PII redaction, tenant policy review,
-  and deployment-specific access controls.
+  represented in the architecture, but need real-workspace soak testing.
+- Before production use, the security layer needs a deployment-specific pass for
+  prompt injection, PII redaction, tenant access policy, retention, and audit
+  logging.
 
 The detailed roadmap is in [`LIMITATIONS.md`](LIMITATIONS.md).
 
----
+## Notable Implementation Detail
 
-## What's interesting under the hood
+The most important retrieval improvement is in
+[`aim/agents/nodes/graph_searcher.py`](aim/agents/nodes/graph_searcher.py):
+score boosting by path participation.
 
-The single change that earned +13pp on the multi-hop NDCG climb: **score-boost-by-path-participation** in [`aim/agents/nodes/graph_searcher.py`](aim/agents/nodes/graph_searcher.py).
+Multi-hop answers are often complete paths, not isolated nodes. Hybrid search
+can find an intermediate node as a 2-hop neighbor, but because the intermediate
+name does not always text-match the query, it can land outside NDCG@10. AIM
+boosts entities that appear on discovered paths and re-sorts the graph results.
+That lifts path intermediates into the top results without inventing new facts.
 
-Multi-hop gold answers are typically the entire path (source → intermediate → target). Hybrid search finds the intermediate as a 2-hop neighbor at low score (its name doesn't text-match the sub-query), so it falls outside NDCG@10. After path-finding runs, every entity that appears on a found path gets `+1.0` to its score and `all_entities` is re-sorted. Path-intermediates lift from rank 15+ into top-10; fulltext-strong gold endpoints stay at rank 1-3 because their original scores are even higher. **No new entities inserted, no displacement.**
-
-That ~30-line block is the move that crossed the customer A.2 gate. The rest of the multi-hop machinery — sub-query decomposition, hybrid search, exact-name anchoring, fact-presence refusal, deterministic responder injection — is what gets you *to* the gate.
-
----
-
-## Publishing
+## Publishing And Secrets
 
 This repository is structured so it can be shared publicly without exposing
-local credentials or runtime state. Keep real API keys and deployment-specific
-configuration in `.env` and `frontend/.env.local`; both files are excluded from
-version control. The committed example files document the required settings
+local credentials or runtime state. Real API keys and deployment-specific
+configuration belong in `.env` and `frontend/.env.local`; both are excluded from
+version control. The committed example files document the required variables
 without containing working secrets.
 
 Recommended release checks:
@@ -277,15 +300,8 @@ python -m pip_audit
 python -m pytest -p no:cacheprovider tests/unit tests/eval -q
 ```
 
-For a fresh install, copy `.env.example` to `.env` and
-`frontend/.env.local.example` to `frontend/.env.local`, then provide the
-credentials for the services you plan to use: Neo4j, a local or hosted LLM,
-Slack, Jira, Confluence, Pinecone, or Qdrant.
-
----
-
 ## Credits
 
-Built solo over April 2026 as an exploration of what graph-RAG actually buys you over vector RAG, and what an "institutional memory" tool would need to be useful, not impressive.
-
-The score-boost-by-path-participation technique is genuinely novel as far as I can tell — happy to be told otherwise. Open to PRs that confirm or refute it on a larger fixture.
+Built solo in April 2026 as an exploration of what graph-backed retrieval can
+add beyond vector RAG, and what an institutional-memory tool would need before
+it becomes useful inside an engineering organization.
